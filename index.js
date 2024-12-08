@@ -62,7 +62,7 @@ async function run() {
             res.send(result)
         });
 
-        //Get equipment for update data by logged-in user's email
+        //Get equipment for update, data by logged-in user's email
         app.get('/my-equipments/update/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
@@ -75,7 +75,7 @@ async function run() {
             const id = req.params.id;
             const filter = { _id: new ObjectId(id) };
             const options = { upsert: true };
-            const updatedEquipment = req.body; // Corrected from res.body to req.body
+            const updatedEquipment = req.body;
             const equipment = {
                 $set: {
                     image: updatedEquipment.image,
@@ -95,12 +95,13 @@ async function run() {
             res.send(result);
         });
 
-
-
-
-
-
-
+        //logged user delete her item from mongodb 
+        app.delete('/my-equipments/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await EquipmentCollection.deleteOne(query);
+            res.send(result);
+        })
 
 
 
