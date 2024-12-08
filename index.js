@@ -44,24 +44,59 @@ async function run() {
             res.send(result);
         })
 
-        //get data by id from mongodb
-        app.get('/all-sports-equipment/details/:id', async (req, res) => {
+        //get all data by id from mongodb
+        app.get('/all-sports-equipments/details/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) }
             const result = await EquipmentCollection.findOne(query);
             res.send(result);
         })
 
+        /**********  this task for only logged user  **************************/
 
         // Get equipment data by logged-in user's email
-        app.get('/my-equipment/:email', async (req, res) => {
+        app.get('/my-equipments/:email', async (req, res) => {
             const email = req.params.email;
             const filter = { email: email };
             const result = await EquipmentCollection.find(filter).toArray();
             res.send(result)
         });
 
-        
+        //Get equipment for update data by logged-in user's email
+        app.get('/my-equipments/update/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await EquipmentCollection.findOne(query);
+            res.send(result);
+        })
+
+        // update equipment by logged-in user only her equipment
+        app.put('/my-equipments/update/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+            const updatedEquipment = req.body; // Corrected from res.body to req.body
+            const equipment = {
+                $set: {
+                    image: updatedEquipment.image,
+                    itemName: updatedEquipment.itemName,
+                    categoryName: updatedEquipment.categoryName,
+                    description: updatedEquipment.description,
+                    price: updatedEquipment.price,
+                    rating: updatedEquipment.rating,
+                    customization: updatedEquipment.customization,
+                    processingTime: updatedEquipment.processingTime,
+                    stockStatus: updatedEquipment.stockStatus,
+                    email: updatedEquipment.email,
+                    name: updatedEquipment.name
+                },
+            };
+            const result = await EquipmentCollection.updateOne(filter, equipment, options);
+            res.send(result);
+        });
+
+
+
 
 
 
