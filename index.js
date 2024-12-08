@@ -56,10 +56,12 @@ async function run() {
         // Get equipment data by logged-in user's email
         app.get('/my-equipment/:email', async (req, res) => {
             const email = req.params.email;
-            const filter = {email: email};
+            const filter = { email: email };
             const result = await EquipmentCollection.find(filter).toArray();
             res.send(result)
         });
+
+        
 
 
 
