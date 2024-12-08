@@ -44,15 +44,21 @@ async function run() {
             res.send(result);
         })
 
+        //get data by id from mongodb
+        app.get('/all-sports-equipment/details/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await EquipmentCollection.findOne(query);
+            res.send(result);
+        })
+
+
         // Get equipment data by logged-in user's email
-        app.get('/equipments', async (req, res) => {
-            const { userEmail } = req.query;
-            if (!userEmail) {
-                return res.status(400).send({ message: "User email is required" }); 
-            }
-            const query = { userEmail: userEmail }; 
-            const result = await EquipmentCollection.filter(query).toArray(); 
-            res.send(result); 
+        app.get('/my-equipment/:email', async (req, res) => {
+            const email = req.params.email;
+            const filter = {email: email};
+            const result = await EquipmentCollection.find(filter).toArray();
+            res.send(result)
         });
 
 
