@@ -46,7 +46,8 @@ async function run() {
 
         //get 6 data from mongodb
         app.get('/home-equipments', async (req, res) => {
-            const cursor = EquipmentCollection.find().limit(2);
+            // const cursor = EquipmentCollection.find().limit(6);
+            const cursor = EquipmentCollection.find();
             const result = await cursor.toArray();
             res.send(result);
         })
@@ -87,7 +88,7 @@ async function run() {
                 $set: {
                     image: updatedEquipment.image,
                     itemName: updatedEquipment.itemName,
-                    categoryName: updatedEquipment.categoryName,
+                    category: updatedEquipment.category,
                     description: updatedEquipment.description,
                     price: updatedEquipment.price,
                     rating: updatedEquipment.rating,
