@@ -44,10 +44,19 @@ async function run() {
             res.send(result);
         })
 
+        //get 6 data from mongodb for category
+        app.get('/categories/:category', async (req, res) => {
+            const category = req.params.category;
+            const filter = { category: category };
+            const result = await EquipmentCollection.find(filter).toArray();
+            res.send(result);
+        });
+
+
         //get 6 data from mongodb
         app.get('/home-equipments', async (req, res) => {
-            // const cursor = EquipmentCollection.find().limit(6);
-            const cursor = EquipmentCollection.find();
+            const cursor = EquipmentCollection.find().limit(6);
+            // const cursor = EquipmentCollection.find();
             const result = await cursor.toArray();
             res.send(result);
         })
@@ -135,29 +144,3 @@ app.listen(port, () => {
 
 
 
-
-// _id: ObjectId('67538476e7c808f5ca22bb29')
-// image: "https://example.com/images/table-tennis-paddle.jpg",
-// itemName: "Table Tennis Paddle",
-// categoryName: "Table Tennis",
-// description: "Ergonomic paddle with high-speed rubber.",
-// price: "1000",
-// rating: "4.4",
-// customization: "Handle wrap",
-// processingTime: "2-3 days",
-// stockStatus: "40"
-// userEmail: "tarekhossen105@gmail.com"
-// userName: "Tarek Rahman"
-
-// _id: ObjectId('67538476e7c808f5ca26562bb29')
-// image: "https://example.com/images/table-tennis-paddle2.jpg",
-// itemName: "Table Tennis Paddle",
-// categoryName: "Table Tennis",
-// description: "Ergonomic paddle with high-speed rubber.",
-// price: "1000",
-// rating: "4.4",
-// customization: "Handle wrap",
-// processingTime: "2-3 days",
-// stockStatus: "80"
-// userEmail: "reyad900@gmail.com"
-// userName: "Reyad"
