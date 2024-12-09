@@ -44,6 +44,13 @@ async function run() {
             res.send(result);
         })
 
+        //get 6 data from mongodb
+        app.get('/home-equipments', async (req, res) => {
+            const cursor = EquipmentCollection.find().limit(2);
+            const result = await cursor.toArray();
+            res.send(result);
+        })
+
         //get all data by id from mongodb
         app.get('/all-sports-equipments/details/:id', async (req, res) => {
             const id = req.params.id;
