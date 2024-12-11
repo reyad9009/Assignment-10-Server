@@ -79,7 +79,7 @@ async function run() {
             res.send(result)
         });
 
-        //Get equipment for update, data by logged-in user's email
+        //Get equipment for update, data by logged-in user's email*****
         app.get('/my-equipments/update/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
